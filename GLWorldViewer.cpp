@@ -14,16 +14,16 @@ b2Vec2* GLWorldViewer ::QTtoOpenGl( b2Vec2* coord )
 {
 	//TRANSFORMA COORD QT -> OpenGl
 	float32 wx = coord->x;
-	float32 vxmax = (float32) xview + width;
-	float32 vxmin = (float32) xview;
-	float32 wxmax = (float32) width;
-	float32 wxmin = (float32) 0;
+    float32 vxmax = xview + static_cast< float > ( width );
+    float32 vxmin = static_cast< float > ( xview );
+    float32 wxmax = static_cast< float > ( width );
+    float32 wxmin = 0.0f;
 	//
 	float32 wy = coord->y;
-	float32 vymax = (float32) yview;
-	float32 vymin = (float32) yview + height;
-	float32 wymax = (float32) height;
-	float32 wymin = (float32) 0;
+    float32 vymax = static_cast< float > ( yview );
+    float32 vymin = yview + static_cast< float > ( height );
+    float32 wymax = static_cast< float > ( height );
+    float32 wymin = 0.0f;
 	
 	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
@@ -31,16 +31,16 @@ b2Vec2* GLWorldViewer :: OpenGltoQT( b2Vec2* coord )
 {
 	//TRANSFORMA OpenGl -> COORD QT
 	float32 wx = coord->x;
-	float32 vxmax = (float32) width;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) xview + width;
-	float32 wxmin = (float32) xview;
+    float32 vxmax = static_cast< float > ( width );
+    float32 vxmin = 0.0f;
+    float32 wxmax = xview + static_cast< float > ( width );
+    float32 wxmin = static_cast< float > ( xview );
 	//
 	float32 wy = coord->y;
-	float32 vymax = (float32) height;
-	float32 vymin = (float32) 0;
-	float32 wymax = (float32) yview;
-	float32 wymin = (float32) yview + height;
+    float32 vymax = static_cast< float > ( height );
+    float32 vymin = 0.0f;
+    float32 wymax = static_cast< float > ( yview );
+    float32 wymin = yview + static_cast< float > ( height );
 	
 	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
@@ -48,16 +48,16 @@ b2Vec2* GLWorldViewer ::OpenGltoBox2d( b2Vec2* coord )
 {
 	//TRANSFORMA COORD OpenGl -> BOX2D
 	float32 wx = coord->x;
-	float32 vxmax = (float32) width/2;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) width;
-	float32 wxmin = (float32) 0;
+    float32 vxmax = static_cast< float > ( width ) / 2.0f;
+    float32 vxmin = 0.0f;
+    float32 wxmax = static_cast< float > ( width );
+    float32 wxmin = 0.0f;
 	//
 	float32 wy = coord->y;
-	float32 vymax = (float32) 0;
-	float32 vymin = (float32) height/2;
-	float32 wymax = (float32) 0;
-	float32 wymin = (float32) height;
+    float32 vymax = 0.0f;
+    float32 vymin = static_cast< float > ( height ) / 2.0f;
+    float32 wymax = 0.0f;
+    float32 wymin = static_cast< float > ( height );
 	
 	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
@@ -65,16 +65,16 @@ b2Vec2* GLWorldViewer :: Box2dtoOpenGl( b2Vec2* coord )
 {
 	//TRANSFORMA COORD BOX2D -> OpenGl
 	float32 wx = coord->x;
-	float32 vxmax = (float32) width;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) width/2;
-	float32 wxmin = (float32) 0;
+    float32 vxmax = static_cast< float > ( width );
+    float32 vxmin = 0.0f;
+    float32 wxmax = static_cast< float > ( width ) / 2.0f;
+    float32 wxmin = 0.0f;
 	//
 	float32 wy = coord->y;
-	float32 vymax = (float32) 0;
-	float32 vymin = (float32) height;
-	float32 wymax = (float32) 0;
-	float32 wymin = (float32) height/2;
+    float32 vymax = 0.0f;
+    float32 vymin = static_cast< float > ( height );
+    float32 wymax = 0.0f;
+    float32 wymin = static_cast< float > ( height ) / 2.0f;
 	
 	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
@@ -105,7 +105,7 @@ GLWorldViewer :: GLWorldViewer( QWidget *parent, double W, double H )
 	connect( individual_timer, SIGNAL( timeout() ), this, SLOT( testIndividue() ) );
 	//
 	setFormat( QGLFormat( QGL::DoubleBuffer | QGL::DepthBuffer ) );
-	setFixedSize( width, height );
+    setFixedSize( static_cast< int > ( width ), static_cast< int > ( height ) );
 	//
 	population_type = SINGLE_POPULATION;
 	selection_type = ALEATORY;
@@ -155,7 +155,7 @@ void GLWorldViewer :: setPopulationType( QString type_name )
 	{
 		if( best_historic.size() )
 		{
-			int diff = abs( ( int ) ( actual_historic.size() - best_historic.size() ) );
+            int diff = abs( static_cast< int > ( actual_historic.size() - best_historic.size() ) );
 			if( actual_historic.size() < best_historic.size() )
 			{
 				for ( int i = 0; i < diff; i++ ) {
@@ -172,7 +172,7 @@ void GLWorldViewer :: setPopulationType( QString type_name )
 			{
 				std :: vector<REGISTER*> aux_historic = actual_historic;
 				actual_historic.clear();
-				for ( int i = 0; i < population_size; i++ ) {
+                for ( size_t i = 0; i < population_size; i++ ) {
 					actual_historic.push_back( aux_historic[i] );
 				}
 			}
@@ -180,7 +180,7 @@ void GLWorldViewer :: setPopulationType( QString type_name )
 				actual_historic = includeInOrder( actual_historic, best_historic[ rid ] );
 		}
 		population_type = SINGLE_POPULATION;
-		( ( GLWorldWidget* ) parent() )->setBestHistoricText( "" );
+        dynamic_cast< GLWorldWidget* >( parent() )->setBestHistoricText( "" );
 		showActualHistoric();
 	}
 	if( type_name == "ACTUAL & BEST" )
@@ -195,11 +195,11 @@ void GLWorldViewer :: setSelectionType( QString type_name )
 	if( type_name == "TOURNEY" )
 		selection_type = TOURNEY;
 }
-void GLWorldViewer :: setPopulationSize( int value )
+void GLWorldViewer :: setPopulationSize( size_t value )
 {
 	population_size = value;
 }
-void GLWorldViewer ::  setGeneratorsSize( int value )
+void GLWorldViewer ::  setGeneratorsSize( size_t value )
 {
 	generators_size = value;
 }
@@ -267,8 +267,8 @@ void GLWorldViewer :: turn( void )
 	
 	if( individue )
 	{
-		xview = individue->getBody()->GetWorldCenter().x - width/2;
-		yview = individue->getBody()->GetWorldCenter().y - height/2;
+        xview = individue->getBody()->GetWorldCenter().x - static_cast< float > ( width ) / 2.0f;
+        yview = individue->getBody()->GetWorldCenter().y - static_cast< float > ( height ) / 2.0f;
 		//std :: cout << "height " << individue->getCarAngle() << std :: endl;
 		projection();
 	}
@@ -280,7 +280,7 @@ bool GLWorldViewer :: stopCondition( void )
 		return true; 
 	for ( size_t bid_1 = 0; bid_1 < best_historic.size() - 1; bid_1++ )
 		for ( size_t bid_2 = bid_1 + 1; bid_2 < best_historic.size(); bid_2++ )
-			if( fabs( best_historic[ bid_1 ]->score - best_historic[ bid_2 ]->score ) > 0.01 )
+            if( abs( best_historic[ bid_1 ]->score - best_historic[ bid_2 ]->score ) > 0.01f )
 				return false;
 	return true;
 }
@@ -288,7 +288,7 @@ void GLWorldViewer :: testIndividue( void )
 {
 	if( individue )
 	{
-		if( individue->getVelocity().x < minimum_x_velocity )
+        if( static_cast< double > ( individue->getVelocity().x ) < minimum_x_velocity )
 			time_stopped++;
 		else
 			time_stopped = 0;
@@ -302,7 +302,7 @@ void GLWorldViewer :: testIndividue( void )
 		if( time_stopped > 1500 || individual_clock > ( maximum_test_interval * 60000 )  )
 			createIndividue();
 		
-		if( individue->getCarCenter().x > 9.5 * width )
+        if( static_cast< double > ( individue->getCarCenter().x ) > 9.5 * width )
 		{
 			achieved = true;
 			createIndividue();
@@ -327,19 +327,18 @@ std :: vector<REGISTER*> GLWorldViewer :: orderHistoric( std :: vector<REGISTER*
 std :: vector<REGISTER*> GLWorldViewer :: includeInOrder( std :: vector<REGISTER*> where, REGISTER * who )
 {
 	std :: vector<REGISTER*> auxiliar_vector = where;
-	bool found = false;
-	int founded_id;
-	for ( size_t best_id = 0; best_id < auxiliar_vector.size() && !found; best_id++ )
+    int founded_id = -1;
+    //
+    for ( size_t best_id = 0; best_id < auxiliar_vector.size() && founded_id == -1; best_id++ )
 		if( who->score > auxiliar_vector[ best_id ]->score )
 		{
-			found = true;
-			founded_id = ( int ) best_id;
+            founded_id = static_cast< int > ( best_id );
 		}
-	if( found )
+    if( founded_id != -1 )
 	{
-		for ( int id = auxiliar_vector.size() - 1; id >= founded_id + 1; id-- )
+        for ( size_t id = auxiliar_vector.size() - 1; id >= static_cast< size_t > ( founded_id ) + 1; id-- )
 			auxiliar_vector[ id ] = auxiliar_vector[ id - 1 ];
-		auxiliar_vector[ founded_id ] = who;
+        auxiliar_vector[ static_cast< size_t > ( founded_id ) ] = who;
 	}
 	return auxiliar_vector;
 }
@@ -358,14 +357,14 @@ REGISTER * GLWorldViewer :: createRegister( void )
 	//
 	// CALCULO DO ESCORE
 	//
-	reg->score = 1 + ( ( float32 ) reg->x_distance / reg->time_spent );
+    reg->score = 1 + static_cast< float32 > ( reg->x_distance / reg->time_spent );
 	//
 	if( wheels_kick_discounted )
-		reg->score -= wheels_discount;
+        reg->score -= static_cast< float32 > ( wheels_discount );
 	if( body_crash_discounted )
-		reg->score -= body_discount;
+        reg->score -= static_cast< float32 > ( body_discount );
 	if( loop_count_discounted )
-		reg->score -= loop_discount;
+        reg->score -= static_cast< float32 > ( loop_discount );
 	
 	if( reg->score < 0 )
 		reg->score = 0;
@@ -378,8 +377,8 @@ void GLWorldViewer :: displayBestCar( std :: vector<REGISTER*> where )
 {
 	if( where.size() )
 	{
-		GeneticCar * aux = new GeneticCar( where[ 0 ]->register_id, this, new b2Vec2( 0, 0 ), 100, where[ 0 ]->specie, NULL );
-		( ( GLWorldWidget * ) parent() )->setBestCar( aux );
+        GeneticCar * aux = new GeneticCar( where[ 0 ]->register_id, this, new b2Vec2( 0, 0 ), 100, where[ 0 ]->specie, nullptr );
+        dynamic_cast< GLWorldWidget* > ( parent() )->setBestCar( aux );
 		aux->Destroy();
 	}
 }
@@ -388,7 +387,7 @@ void GLWorldViewer :: addInSinglePopulation( void )
 	//
 	REGISTER * reg = createRegister();
 	
-	if( ( int ) actual_historic.size() >= population_size )
+    if( actual_historic.size() >= population_size )
 	{	
 		create_population = false;
 		actual_historic = includeInOrder( actual_historic, reg );
@@ -407,14 +406,14 @@ void GLWorldViewer :: addInActualBestPopulation( void )
 {
 	REGISTER * reg = createRegister();
 	
-	if( ( int ) actual_historic.size() >= population_size )
+    if( actual_historic.size() >= population_size )
 	{	
 		generation++;
 		create_population = false;
 		//
 		if( best_historic.size() )
 		{
-			int diff = abs( ( int ) ( actual_historic.size() - best_historic.size() ) );
+            int diff = static_cast< int > ( fabs( actual_historic.size() - best_historic.size() ) );
 			//
 			if( best_historic.size() < actual_historic.size() )
 			{
@@ -461,10 +460,10 @@ int GLWorldViewer :: tourney( std :: vector<REGISTER*> contesters )
 	//VETOR DE COMPETIDORES DO TORNEIO
 	std :: vector<REGISTER*> players;
 	//ENQUANTO O VETOR NAO ESTIVER COMPLETO...
-	while( ( int )players.size() < generators_size )
+    while( players.size() < generators_size )
 	{ 
 		//PEGA UM INDIVIDUO ALEATORIO ENTRE TODA A POPULACAO E INCLUI NO VETOR DE COMPETIDORES
-		int aleatory = rand() % ( int ) contesters.size();
+        size_t aleatory = static_cast< size_t > ( rand() % static_cast< int > ( contesters.size() ) );
 		bool found = false;
 		for ( size_t pid = 0; pid < players.size() && !found; pid++ )
 			if( players[ pid ]->register_id == contesters[ aleatory ]->register_id )
@@ -476,7 +475,7 @@ int GLWorldViewer :: tourney( std :: vector<REGISTER*> contesters )
 	players = orderHistoric( players );
 	for ( size_t pop_id = 0; pop_id < contesters.size(); pop_id++ )
 		if( contesters[ pop_id ]->register_id == players[ 0 ]->register_id )
-			return ( int ) pop_id;
+            return static_cast< int > ( pop_id );
 	
 	std :: cout << "TORNEIO ESCOLHEU NINGUEM" << std :: endl;
 	return -1;
@@ -485,9 +484,9 @@ int GLWorldViewer :: roulette( std :: vector<REGISTER*> players )
 {
 	int sum = 0;
 	//
-	int actual_real_size = ( generators_size > ( int )players.size() ) ? ( int ) players.size() : generators_size;
+    size_t actual_real_size = ( generators_size > players.size() ) ? players.size() : generators_size;
 	//
-	for ( int pid = 0; pid < actual_real_size; pid++ )
+    for ( size_t pid = 0; pid < actual_real_size; pid++ )
 		sum += ( players[ pid ]->score * 10000 );
 	
 	if( sum )
@@ -495,29 +494,29 @@ int GLWorldViewer :: roulette( std :: vector<REGISTER*> players )
 		int aleatory = rand() % sum;
 		
 		int partial_sum = 0;
-		for ( int pid = 0; pid < actual_real_size; pid++ )
+        for ( size_t pid = 0; pid < actual_real_size; pid++ )
 		{
 			if( aleatory >= partial_sum && aleatory < ( partial_sum + ( players[ pid ]->score * 10000 ) ) )
-				return pid;
+                return static_cast< int > ( pid );
 			partial_sum += players[ pid ]->score * 10000 ;
 		}
 	}
 	else {
 		std :: cout << "ROLETA LOUCA" << std :: endl;
-		return rand() % players.size();
+        return rand() % static_cast< int > ( players.size() );
 	}
 	std :: cout << "ROLETA ESCOLHEU NINGUEM" << std :: endl;
 	return -1;
 }
-void GLWorldViewer :: displayParent( std :: vector<REGISTER*> where, int reg_id, int flag )
+void GLWorldViewer :: displayParent( std :: vector<REGISTER*> where, size_t reg_id, int flag )
 {
 	if( where.size() )
 	{
-		GeneticCar * aux = new GeneticCar( where[ reg_id ]->register_id, this, new b2Vec2( 0, 0 ), 100, where[ reg_id ]->specie, NULL );
+        GeneticCar * aux = new GeneticCar( where[ reg_id ]->register_id, this, new b2Vec2( 0, 0 ), 100, where[ reg_id ]->specie, nullptr );
 		if( !flag )
-			( ( GLWorldWidget * ) parent() )->setFirstParent( aux );
+            dynamic_cast< GLWorldWidget* > ( parent() )->setFirstParent( aux );
 		else
-			( ( GLWorldWidget * ) parent() )->setSecondParent( aux );
+            dynamic_cast< GLWorldWidget* > ( parent() )->setSecondParent( aux );
 		aux->Destroy();
 	}
 }
@@ -542,11 +541,11 @@ void GLWorldViewer :: createIndividue( void )
 	}
 	if( create_population )
 	{
-		individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3*height/4 ), 100, NULL, NULL );
+        individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3.0f * height / 4.0f ), 100, nullptr, nullptr );
 	}
 	else
 	{
-		int choosed_id_1, choosed_id_2;
+        int choosed_id_1 = -1, choosed_id_2 = -1;
 		//ESCOLHE PARENTE A E DISPLAY PARENT A
 		if( population_type == SINGLE_POPULATION )
 		{
@@ -555,7 +554,7 @@ void GLWorldViewer :: createIndividue( void )
 			else if( selection_type == TOURNEY )
 				choosed_id_1 = tourney( actual_historic );
 			else if( selection_type == ALEATORY )
-				choosed_id_1 = rand() % ( ( int ) actual_historic.size() );
+                choosed_id_1 = rand() % static_cast< int > ( actual_historic.size() );
 		}
 		if( population_type == ACTUAL_BEST )
 		{
@@ -564,15 +563,15 @@ void GLWorldViewer :: createIndividue( void )
 			else if( selection_type == TOURNEY )
 				choosed_id_1 = tourney( best_historic );
 			else if( selection_type == ALEATORY )
-				choosed_id_1 = rand() % ( ( int ) best_historic.size() );
+                choosed_id_1 = rand() % static_cast< int > (  best_historic.size() );
 		}
 		//TESTE DE MUTACAO
 		int mutation = rand() % 10000;
-		GeneticCar * mutant = NULL;
+        GeneticCar * mutant = nullptr;
 		//MUTACAO !!!
 		if( mutation < mutation_tax * 100 )
 		{
-			mutant = new GeneticCar( -666, this, new b2Vec2( 0, 0 ), 100, NULL, NULL );
+            mutant = new GeneticCar( -666, this, new b2Vec2( 0, 0 ), 100, nullptr, nullptr );
 		}
 		else {
 			if( population_type == SINGLE_POPULATION )
@@ -582,7 +581,7 @@ void GLWorldViewer :: createIndividue( void )
 				else if( selection_type == TOURNEY )
 					choosed_id_2 = tourney( actual_historic );
 				else if( selection_type == ALEATORY )
-					choosed_id_2 = rand() % ( ( int ) actual_historic.size() );
+                    choosed_id_2 = rand() % static_cast< int > ( actual_historic.size() );
 			}
 			else if( population_type == ACTUAL_BEST )
 			{
@@ -591,7 +590,7 @@ void GLWorldViewer :: createIndividue( void )
 				else if( selection_type == TOURNEY )
 					choosed_id_2 = tourney( best_historic );
 				else if( selection_type == ALEATORY )
-					choosed_id_2 = rand() % ( ( int ) best_historic.size() );
+                    choosed_id_2 = rand() % static_cast< int > (   best_historic.size() );
 			}
 			//
 			if( !ressurection_allowed )
@@ -604,7 +603,7 @@ void GLWorldViewer :: createIndividue( void )
 						else if( selection_type == TOURNEY )
 							choosed_id_2 = tourney( actual_historic );
 						else if( selection_type == ALEATORY )
-							choosed_id_2 = rand() % ( ( int ) actual_historic.size() );
+                            choosed_id_2 = rand() % static_cast< int > ( actual_historic.size() );
 					}
 					else if( population_type == ACTUAL_BEST )
 					{
@@ -613,14 +612,14 @@ void GLWorldViewer :: createIndividue( void )
 						else if( selection_type == TOURNEY )
 							choosed_id_2 = tourney( best_historic );
 						else if( selection_type == ALEATORY )
-							choosed_id_2 = rand() % ( ( int ) best_historic.size() );
+                            choosed_id_2 = rand() % static_cast< int > ( best_historic.size() );
 					}
 				}
 		}
 		//SE MUTANTE...
 		if( mutant )
 		{
-			( ( GLWorldWidget * ) parent() )->setFirstParent( mutant );
+            dynamic_cast< GLWorldWidget* > ( parent() )->setFirstParent( mutant );
 			//
 			if( population_type == SINGLE_POPULATION )
 			{
@@ -630,7 +629,7 @@ void GLWorldViewer :: createIndividue( void )
 					individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3*height/4 ), 100, mutant->getCromossome(), actual_historic[ choosed_id_1 ]->specie );
 				}
 				else {
-					( ( GLWorldWidget * ) parent() )->setSecondParent( NULL );
+                    dynamic_cast< GLWorldWidget* > ( parent() )->setSecondParent( nullptr );
 					individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3*height/4 ), 100, mutant->getCromossome(), NULL );
 				}
 				mutant->Destroy();
@@ -643,7 +642,7 @@ void GLWorldViewer :: createIndividue( void )
 					individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3*height/4 ), 100, mutant->getCromossome(), best_historic[ choosed_id_1 ]->specie );
 				}
 				else {
-					( ( GLWorldWidget * ) parent() )->setSecondParent( NULL );
+                    dynamic_cast< GLWorldWidget* > ( parent() )->setSecondParent( NULL );
 					individue = new GeneticCar( individue_id, this, new b2Vec2( initial_position, 3*height/4 ), 100, mutant->getCromossome(), NULL );
 				}
 				mutant->Destroy();
@@ -688,7 +687,7 @@ void GLWorldViewer :: saveRegister( std :: string file_name, REGISTER* reg  )
 		CROMOSSOME * centry = reg->specie;
 		fwrite( &centry->number_of_wheels, 1, sizeof( int ), file );
 		fwrite( &centry->max_ray, 1, sizeof( float32 ), file );
-		for( int wid = 0; wid < centry->number_of_wheels; wid++ )
+        for( size_t wid = 0; wid < static_cast< size_t > ( centry->number_of_wheels ); wid++ )
 		{
 			fwrite( &centry->wheeled_parts[wid], 1, sizeof( int ), file );
 			fwrite( &centry->wheels_ray[wid], 1, sizeof( float32 ), file );
@@ -698,7 +697,7 @@ void GLWorldViewer :: saveRegister( std :: string file_name, REGISTER* reg  )
 			fwrite( &centry->wheels_torque[wid], 1, sizeof( float32 ), file );
 			fwrite( &centry->wheels_velocity[wid], 1, sizeof( float32 ), file );
 		}
-		for( int pid = 0; pid < 8; pid++ )
+        for( size_t pid = 0; pid < 8; pid++ )
 		{
 			fwrite( &centry->parts_ray[pid], 1, sizeof( float32 ), file );
 			fwrite( &centry->parts_angle[pid], 1, sizeof( float32 ), file );
@@ -753,7 +752,7 @@ std :: vector<REGISTER*> GLWorldViewer :: loadHistoric( std :: string file_name 
 				fread( &value, 1, sizeof( float32 ), file );
 				centry->wheels_velocity.push_back( value );
 			}
-			for( int pid = 0; pid < 8; pid++ )
+            for( size_t pid = 0; pid < 8; pid++ )
 			{
 				fread( &centry->parts_ray[pid], 1, sizeof( float32 ), file );
 				fread( &centry->parts_angle[pid], 1, sizeof( float32 ), file );
@@ -816,15 +815,14 @@ long GLWorldViewer :: getClock( void )
 	return clock;
 }
 void GLWorldViewer :: initializeGL( void )
-{
-	//PRERROGATIVAS OpenGl
-	
+{    	
 	glViewport( 0, 0, width, height );
 	
-	glMatrixMode ( GL_PROJECTION );
-	glLoadIdentity ();
+    glDisable(GL_DEPTH_TEST);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
 	
-	gluOrtho2D( xview, xview + width, yview, yview + height );
+    gluOrtho2D( static_cast< double > ( xview ), static_cast< double > ( xview ) + width, static_cast< double > ( yview ), static_cast< double > ( yview ) + height );
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -836,13 +834,13 @@ void GLWorldViewer :: initializeGL( void )
 	
 	glShadeModel (GL_SMOOTH);
 	
-	individue = NULL;
+    individue = nullptr;
 	
 	createTerrain();
 }
 void putObstacles( void )
 {
-	int number_of_obstacles = 50;
+    int number_of_obstacles = 50;
 }
 void GLWorldViewer :: createTerrain( void )
 {
@@ -852,7 +850,7 @@ void GLWorldViewer :: createTerrain( void )
 	switch( terrain_type )
 	{
 		case PLAIN:
-			base = new GroundBlock( bases.size(), this, new b2Vec2( 0, height/4 ), new b2Vec2( 10 * width, height/4 ) );
+            base = new GroundBlock( bases.size(), this, new b2Vec2( 0.0f, height / 4.0f ), new b2Vec2( 10 * width, height/4 ) );
 			bases.push_back( base );
 			break;
 		case IRREGULAR:
@@ -900,7 +898,7 @@ void GLWorldViewer :: projection( void )
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
 	
-	gluOrtho2D( xview, xview + width, yview, yview + height );
+    gluOrtho2D( static_cast< double > ( xview ), static_cast< double > ( xview ) + width, static_cast< double > ( yview ), static_cast< double > ( yview ) + height );
 	
 	glMatrixMode ( GL_MODELVIEW );
 	glLoadIdentity ();

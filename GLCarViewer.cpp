@@ -12,71 +12,71 @@
 
 b2Vec2* GLCarViewer ::QTtoOpenGl( b2Vec2* coord )
 {
-	//TRANSFORMA COORD QT -> OpenGl
-	float32 wx = coord->x;
-	float32 vxmax = (float32) xview + width;
-	float32 vxmin = (float32) xview;
-	float32 wxmax = (float32) width;
-	float32 wxmin = (float32) 0;
-	//
-	float32 wy = coord->y;
-	float32 vymax = (float32) yview;
-	float32 vymin = (float32) yview + height;
-	float32 wymax = (float32) height;
-	float32 wymin = (float32) 0;
-	
-	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
+    //TRANSFORMA COORD QT -> OpenGl
+    float32 wx = coord->x;
+    float32 vxmax = xview + static_cast< float > ( width );
+    float32 vxmin = static_cast< float > ( xview );
+    float32 wxmax = static_cast< float > ( width );
+    float32 wxmin = 0.0f;
+    //
+    float32 wy = coord->y;
+    float32 vymax = static_cast< float > ( yview );
+    float32 vymin = yview + static_cast< float > ( height );
+    float32 wymax = static_cast< float > ( height );
+    float32 wymin = 0.0f;
+
+    return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
 b2Vec2* GLCarViewer :: OpenGltoQT( b2Vec2* coord )
 {
-	//TRANSFORMA OpenGl -> COORD QT
-	float32 wx = coord->x;
-	float32 vxmax = (float32) width;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) xview + width;
-	float32 wxmin = (float32) xview;
-	//
-	float32 wy = coord->y;
-	float32 vymax = (float32) height;
-	float32 vymin = (float32) 0;
-	float32 wymax = (float32) yview;
-	float32 wymin = (float32) yview + height;
-	
-	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
+    //TRANSFORMA OpenGl -> COORD QT
+    float32 wx = coord->x;
+    float32 vxmax = static_cast< float > ( width );
+    float32 vxmin = 0.0f;
+    float32 wxmax = xview + static_cast< float > ( width );
+    float32 wxmin = static_cast< float > ( xview );
+    //
+    float32 wy = coord->y;
+    float32 vymax = static_cast< float > ( height );
+    float32 vymin = 0.0f;
+    float32 wymax = static_cast< float > ( yview );
+    float32 wymin = yview + static_cast< float > ( height );
+
+    return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
-b2Vec2* GLCarViewer ::OpenGltoBox2d( b2Vec2* coord ) 
+b2Vec2* GLCarViewer ::OpenGltoBox2d( b2Vec2* coord )
 {
-	//TRANSFORMA COORD OpenGl -> BOX2D
-	float32 wx = coord->x;
-	float32 vxmax = (float32) width/2;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) width;
-	float32 wxmin = (float32) 0;
-	//
-	float32 wy = coord->y;
-	float32 vymax = (float32) 0;
-	float32 vymin = (float32) height/2;
-	float32 wymax = (float32) 0;
-	float32 wymin = (float32) height;
-	
-	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
+    //TRANSFORMA COORD OpenGl -> BOX2D
+    float32 wx = coord->x;
+    float32 vxmax = static_cast< float > ( width ) / 2.0f;
+    float32 vxmin = 0.0f;
+    float32 wxmax = static_cast< float > ( width );
+    float32 wxmin = 0.0f;
+    //
+    float32 wy = coord->y;
+    float32 vymax = 0.0f;
+    float32 vymin = static_cast< float > ( height ) / 2.0f;
+    float32 wymax = 0.0f;
+    float32 wymin = static_cast< float > ( height );
+
+    return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
-b2Vec2* GLCarViewer :: Box2dtoOpenGl( b2Vec2* coord ) 
+b2Vec2* GLCarViewer :: Box2dtoOpenGl( b2Vec2* coord )
 {
-	//TRANSFORMA COORD BOX2D -> OpenGl
-	float32 wx = coord->x;
-	float32 vxmax = (float32) width;
-	float32 vxmin = (float32) 0;
-	float32 wxmax = (float32) width/2;
-	float32 wxmin = (float32) 0;
-	//
-	float32 wy = coord->y;
-	float32 vymax = (float32) 0;
-	float32 vymin = (float32) height;
-	float32 wymax = (float32) 0;
-	float32 wymin = (float32) height/2;
-	
-	return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
+    //TRANSFORMA COORD BOX2D -> OpenGl
+    float32 wx = coord->x;
+    float32 vxmax = static_cast< float > ( width );
+    float32 vxmin = 0.0f;
+    float32 wxmax = static_cast< float > ( width ) / 2.0f;
+    float32 wxmin = 0.0f;
+    //
+    float32 wy = coord->y;
+    float32 vymax = 0.0f;
+    float32 vymin = static_cast< float > ( height );
+    float32 wymax = 0.0f;
+    float32 wymin = static_cast< float > ( height ) / 2.0f;
+
+    return new b2Vec2( ( ( vxmax - vxmin )/( wxmax - wxmin ) ) * ( wx - wxmin ) + vxmin, ( ( vymax - vymin )/( wymax - wymin ) ) * ( wy - wymin ) + vymin );
 }
 GLCarViewer :: GLCarViewer( QWidget *parent, double W, double H ) 
 : QGLWidget( parent )
@@ -86,7 +86,7 @@ GLCarViewer :: GLCarViewer( QWidget *parent, double W, double H )
 	//
 	xview = yview = 0;
 	//
-	individue = NULL;
+    individue = nullptr;
 	//
 	//
 	timer = new QTimer;
@@ -94,7 +94,7 @@ GLCarViewer :: GLCarViewer( QWidget *parent, double W, double H )
 	//timer->start(33);
 	//
 	setFormat( QGLFormat( QGL::DoubleBuffer | QGL::DepthBuffer ) );
-	setFixedSize( width, height );
+    setFixedSize( static_cast< int > ( width ), static_cast< int > ( height ) );
 	//
 	setFocus();
 }
@@ -123,8 +123,8 @@ void GLCarViewer :: setTarget( GeneticCar * T )
 	//
 	if( individue )
 	{
-		xview = individue->getBody()->GetWorldCenter().x - width/2;
-		yview = individue->getBody()->GetWorldCenter().y - height/2;
+        xview = individue->getBody()->GetWorldCenter().x - static_cast< float > ( width ) / 2.0f;
+        yview = individue->getBody()->GetWorldCenter().y - static_cast< float > ( height ) / 2.0f;
 		makeCurrent();
 		projection();
 		//makeCurrent();
@@ -144,12 +144,12 @@ void GLCarViewer :: initializeGL( void )
 {
 	//PRERROGATIVAS OpenGl
 	
-	glViewport( 0, 0, width, height );
+    glViewport( 0, 0, static_cast< int > ( width ), static_cast< int > ( height ) );
 	
 	glMatrixMode ( GL_PROJECTION );
 	glLoadIdentity ();
 	
-	gluOrtho2D( xview, xview + width, yview, yview + height );
+    gluOrtho2D( static_cast< double > ( xview ), static_cast< double > ( xview ) + width, static_cast< double > ( yview ), static_cast< double > ( yview ) + height );
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -161,11 +161,11 @@ void GLCarViewer :: initializeGL( void )
 	
 	glShadeModel (GL_SMOOTH);
 	
-	individue = NULL;
+    individue = nullptr;
 }
 void GLCarViewer :: paintGL() 
 {
-	glClearColor ( 0.8, 0.8, 0.8, 0.0 );
+    glClearColor ( 0.8f, 0.8f, 0.8f, 0.0f );
 	glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	
 	glEnable( GL_BLEND );
@@ -179,14 +179,14 @@ void GLCarViewer :: paintGL()
 	}
 	else {
 		glLineWidth( 100 );
-		glColor3f( 0.0, 0.0, 0.0 );
+        glColor3f( 0.0f, 0.0f, 0.0f );
 		glBegin( GL_LINES );
 		//DIAGONAL SECUNDARIA
-		glVertex2f( 0.0, 0.0 );
-		glVertex2f( 200.0, 200.0 );
+        glVertex2f( 0.0f, 0.0f );
+        glVertex2f( 200.0f, 200.0f );
 		//DIAGONAL PRINCIPAL
-		glVertex2f( 0.0, 200.0 );
-		glVertex2f( 200.0, 0.0 );
+        glVertex2f( 0.0f, 200.0f );
+        glVertex2f( 200.0f, 0.0f );
 		glEnd();
 		glLineWidth( 1 );
 	}
@@ -196,10 +196,10 @@ void GLCarViewer :: paintGL()
 }
 void GLCarViewer :: projection( void )
 {
-	glMatrixMode (GL_PROJECTION);
+    glMatrixMode ( GL_PROJECTION );
 	glLoadIdentity ();
 	
-	gluOrtho2D( xview, xview + width, yview, yview + height );
+    gluOrtho2D( static_cast< double > ( xview ), static_cast< double > ( xview ) + width, static_cast< double > ( yview ), static_cast< double > ( yview ) + height );
 	
 	glMatrixMode ( GL_MODELVIEW );
 	glLoadIdentity ();
@@ -211,7 +211,6 @@ void GLCarViewer :: keyPressEvent( QKeyEvent * event )
 			//ESC
 		case 16777216:  
 			exit(0);
-			break;
 		case 27:
 			break;
 		case 32: 

@@ -68,8 +68,8 @@ private:
 	//
 	POPULATION_TYPE population_type;
 	SELECTION_TYPE selection_type;
-	int population_size;
-	int generators_size;
+    size_t population_size;
+    size_t generators_size;
 	double mutation_tax;
 	bool ressurection_allowed;
 	bool cross_mutation;
@@ -103,8 +103,8 @@ public:
 	//SETs
 	void setPopulationType( QString );
 	void setSelectionType( QString );
-	void setPopulationSize( int );
-	void setGeneratorsSize( int );
+    void setPopulationSize( size_t );
+    void setGeneratorsSize( size_t );
 	void setMutationTax( double );
 	void setAllowRessurectionState( int );
 	void setCrossMutation( int );
@@ -125,7 +125,7 @@ public:
 	Object* objectHited( b2Vec2 );
 	//
 	void displayBestCar( std :: vector<REGISTER*> );
-	void displayParent( std :: vector<REGISTER*>, int, int );
+    void displayParent( std :: vector<REGISTER*>, size_t, int );
 	//
 	//HANDLE HISTORICS
 	//

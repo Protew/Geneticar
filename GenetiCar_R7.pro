@@ -135,5 +135,7 @@ SOURCES += CarInfoWidget.cpp \
            Box2D/Dynamics/Joints/b2RevoluteJoint.cpp \
            Box2D/Dynamics/Joints/b2WeldJoint.cpp
 
-DISTFILES += \
-    base.png
+DISTFILES +=
+
+RESOURCES += \
+    setting.qrc

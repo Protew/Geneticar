@@ -15,7 +15,7 @@
 class GroundBlock : public Object {
 	QGLWidget * canvas;
 	b2PolygonShape * shape;
-	GLuint texture;
+    GLuint texture;
 	QImage * image;
 	GLuint display_list;
 public:

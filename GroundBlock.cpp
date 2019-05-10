@@ -16,10 +16,8 @@ GroundBlock :: GroundBlock( int ID, QGLWidget * QGL, b2Vec2 *P, b2Vec2 *D )
 	angle = 0;
 	body_def = new b2BodyDef;
 	body_def->type = b2_staticBody;
-	
-    std::cout << "IMAGE" << std::endl;
 
-	image = new QImage( "base.png" ); 
+    image = new QImage( ":/images/base.png" );
 	
 	canvas = QGL;
 
@@ -44,8 +42,6 @@ GroundBlock :: GroundBlock( int ID, QGLWidget * QGL, b2Vec2 *P, b2Vec2 *D, float
 : Object( ID, dynamic_cast <GLWorldViewer*> ( QGL )->getWorld(), P, D ){
 	
 	angle = A;
-	
-    std::cout << "NON IMAGE" << std::endl;
 
     image = nullptr;
 	
@@ -82,13 +78,14 @@ void GroundBlock :: fillDisplayList( void )
 	for( int i = 0; i < shape->GetVertexCount(); i++ )
         glVertex2d( static_cast<double> ( shape->GetVertex(i).x ), static_cast<double> ( shape->GetVertex(i).y ) );
 	glEnd();
-    if( image != nullptr )
+    if( !image->isNull() )
 	{
 		glEnable( GL_TEXTURE_2D );
-		texture = canvas->bindTexture( *image  );
+        texture = canvas->bindTexture( *image );
 	}
 	glColor4f( 0.5f, 0.5f, 0.5f, 1.0f );
-	glBegin( GL_POLYGON );
+    //
+    glBegin( GL_QUADS );
 	for( int i = 0; i < shape->GetVertexCount(); i++ )
 	{
 		switch ( i ) {
@@ -105,7 +102,7 @@ void GroundBlock :: fillDisplayList( void )
 				glTexCoord2f( 0, 1 );
 				break;
 		}
-        glVertex2d( static_cast<double>( shape->GetVertex(i).x ), static_cast<double>( shape->GetVertex(i).y ) );
+        glVertex2d( static_cast<double>( shape->GetVertex( i ).x ), static_cast<double>( shape->GetVertex( i ).y ) );
 	}
 	glEnd();
 	glDisable( GL_TEXTURE_2D );
